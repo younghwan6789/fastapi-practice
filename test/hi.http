@@ -1,0 +1,33 @@
+###
+GET http://127.0.0.1:3080/healthcheck
+
+{}
+###
+
+###
+POST http://127.0.0.1:3080/users
+Content-Type: application/json
+
+{
+  "user_id": "abcd@email.com",
+  "user_name": "kim",
+  "user_password": "qwer1234"
+}
+
+###
+
+###
+GET http://127.0.0.1:3080/users?offset=0&limit=10&fromDateTime=2024-09-01T00:00:00&toDateTime=2024-09-10T00:00:00
+Content-Type: application/json
+
+{}
+
+###
+
+###
+GET http://127.0.0.1:3080/users/test1
+Content-Type: application/json
+
+{}
+
+###
