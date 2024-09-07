@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Example - User Specific</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #log {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 200px;
+            overflow-y: scroll;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>User-Specific SSE Example</h1>
+
+<div>
+    <label for="userId">User ID:</label>
+    <input type="text" id="userId" placeholder="Enter User ID">
+    <button onclick="connect()">Connect</button>
+</div>
+
+<h2>Received Messages</h2>
+<div id="log"></div>
+
+<script>
+    let eventSource;
+    const log = document.getElementById('log');
+
+    function connect() {
+        const userId = document.getElementById('userId').value;
+        if (userId) {
+            // 사용자 ID에 따라 SSE 연결 설정
+            eventSource = new EventSource(`http://localhost:8000/notifications/${userId}`);
+
+            eventSource.onmessage = function(event) {
+                const message = document.createElement('div');
+                message.classList.add('message');
+                message.textContent = `New notification: ${event.data}`;
+                log.appendChild(message);
+            };
+
+            eventSource.onerror = function() {
+                console.log('Error occurred or connection lost');
+            };
+        } else {
+            alert("Please enter a valid User ID");
+        }
+    }
+</script>
+
+</body>
+</html>
